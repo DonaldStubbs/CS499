@@ -47,12 +47,6 @@ namespace GameProject
 
         // display support
         const int DisplayOffset = 35;
-        public const string ScorePrefix = "Score: ";
-        public static readonly Vector2 ScoreLocation =
-            new Vector2(DisplayOffset, DisplayOffset);
-        public const string highScorePrefix = "HighScore";
-        public static readonly Vector2 highScoreLocation =
-            new Vector2(DisplayOffset, 3 * DisplayOffset);
         public const string HealthPrefix = "Health: ";
         public static readonly Vector2 HealthLocation =
             new Vector2(DisplayOffset, 2 * DisplayOffset);

@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using GameProject.Models;
 
 namespace GameProject
 {
@@ -15,7 +16,6 @@ namespace GameProject
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
 
         Burger burger;
         List<TeddyBear> bears = new List<TeddyBear>();
@@ -29,9 +29,8 @@ namespace GameProject
         static Texture2D explosionSpriteStrip;
 
         // scoring support
-        int score = 0;
-        string scoreString = GameConstants.ScorePrefix + 0;
-        const string ScoreStringPrefix = "Score: ";
+        int scores = 0;
+        ScoreManager scoreManager;
 
         // health support
         string healthString = GameConstants.HealthPrefix +
@@ -97,7 +96,7 @@ namespace GameProject
 
             // load sprite font
             font = Content.Load<SpriteFont>("Arial");
-            scoreString = GetScoreString(score);
+            scoreManager = ScoreManager.Load();
 
             // load projectile and explosion sprites
             teddyBearProjectileSprite = Content.Load<Texture2D>(@"graphics\teddybearprojectile");
@@ -114,7 +113,6 @@ namespace GameProject
 
             // set initial health and score strings
             healthString = GameConstants.HealthPrefix + burger.Health;
-            scoreString = GameConstants.ScorePrefix + score;
 
         }
 
@@ -124,7 +122,7 @@ namespace GameProject
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+
         }
 
         /// <summary>
@@ -231,10 +229,8 @@ namespace GameProject
                     {
                         teddy.Active = false;
                         projectile.Active = false;
-
                         explosions.Add(new Explosion(explosionSpriteStrip, teddy.Location.X, teddy.Location.Y, explosion));
-                        score += GameConstants.BearPoints;
-                        scoreString = GameConstants.ScorePrefix + score;
+                        scores += GameConstants.BearPoints;
                     }
                 }
             }
@@ -308,7 +304,8 @@ namespace GameProject
 
 
             // draw score and health
-            spriteBatch.DrawString(font, scoreString, scorePosition, Color.White);
+            spriteBatch.DrawString(font, "Score: " + scores, new Vector2(10, 10), Color.White);
+            spriteBatch.DrawString(font, "Highscores:\n" + string.Join("\n", scoreManager.Highscores.Select(c => c.PlayerName + ": " + c.Value).ToArray()), new Vector2(680, 10), Color.Red);
             spriteBatch.DrawString(font, healthString, GameConstants.HealthLocation, Color.White);
             spriteBatch.End();
 
@@ -432,15 +429,20 @@ namespace GameProject
             {
                 burgerDeath.Play();
                 burgerDead = true;
-            }
+                scoreManager.Add(new Models.Score()
+                    {
+                        PlayerName = "Player Joe 1",
+                        Value = scores,
+                    }
+            );
+                    ScoreManager.Save(scoreManager);
+                }
+
         }
         /// <summary>
         /// Gets the score string for the Given Score
         /// </summary>
-        private string GetScoreString(int score)
-        {
-            return ScoreStringPrefix + score;
-        }
+
         #endregion
     }
 }

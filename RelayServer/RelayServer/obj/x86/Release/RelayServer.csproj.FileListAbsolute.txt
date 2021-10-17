@@ -1,0 +1,7 @@
+E:\School\ByteRelayServer\RelayServer\RelayServer\bin\Release\RelayServer.exe.config
+E:\School\ByteRelayServer\RelayServer\RelayServer\bin\Release\RelayServer.exe
+E:\School\ByteRelayServer\RelayServer\RelayServer\bin\Release\RelayServer.pdb
+E:\School\ByteRelayServer\RelayServer\RelayServer\obj\x86\Release\RelayServer.csprojAssemblyReference.cache
+E:\School\ByteRelayServer\RelayServer\RelayServer\obj\x86\Release\RelayServer.csproj.CoreCompileInputs.cache
+E:\School\ByteRelayServer\RelayServer\RelayServer\obj\x86\Release\RelayServer.exe
+E:\School\ByteRelayServer\RelayServer\RelayServer\obj\x86\Release\RelayServer.pdb
